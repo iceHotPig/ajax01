@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Document</title>
+  <!-- url -->
+  <!-- type -->
+  <!-- jsonp -->
+  <script>
+    window.onload=function(){
+      var obtn=document.getElementById('btn');
+      var oul=document.getElementById('list');
+      obtn.onclick=function(){
+        var xml = null;
+        if(window.XMLHttpRequest){
+           xml = new XMLHttpRequest();
+        }else {
+           xml = new ActiveXObject("Microsoft.XMLHttp");
+        }
+        xml.open("get",'./news.php?',true);
+        xml.send();
+        xml.onreadystatechange = function (){
+          if(xml.readyState == 4){
+            if (xml.status==200) {
+             var body=JSON.parse(xml.responseText);//转化为对象类型
+               news(body);
+            }
+          }
+        }
+      }
+      function news(data){
+        var oul=document.getElementById('list');
+        for (var i = 0; i < data.length; i++) {
+          var li=document.createElement('li');
+          li.innerHTML='<a href="">'+data[i].titile+'</a><span>'+data[i].data+'</span>';
+          oul.appendChild(li);
+        };
+      }
+    }
+  </script>
+</head>
+<body>
+<button type="" id="btn">get news</button>
+  <ul id="list">
+    <!-- <li><a href="">你是我天经地义的梦</a><span class="time">2017-6-29</span></li>
+    <li><a href="">你是我天经地义的梦</a><span class="time">2017-6-29</span></li>
+    <li><a href="">你是我天经地义的梦</a><span class="time">2017-6-29</span></li>
+    <li><a href="">你是我天经地义的梦</a><span class="time">2017-6-29</span></li> -->
+  </ul>
+</body>
+</html>
